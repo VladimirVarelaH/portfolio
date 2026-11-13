@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portafolio de Vladimir Varela, desarrollador full stack senior: productos propios, sistemas con IA y encargos freelance.">
+<title>Vladimir Varela · Portafolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: bandas a todo el ancho, una por grupo de proyectos; cada pantalla usa negro, papel y un solo primario.
+   Diseño de un solo tema (papel claro), por decisión: Bauhaus no tiene modo oscuro. */
+:root {
+  --rojo:     #E3000F;
+  --amarillo: #FFD500;
+  --azul:     #0057B7;
+  --negro:    #111111;
+  --blanco:   #F4F1EA;
+
+  --font: 'Archivo', 'Futura', system-ui, sans-serif;
+
+  /* escala ratio 1.6 */
+  --t-xs: 12px;  --t-sm: 16px;  --t-md: 26px;
+  --t-lg: 42px;  --t-xl: 67px;  --t-2xl: 107px;
+
+  --borde: 3px;
+  --ease: cubic-bezier(0.85, 0, 0.15, 1);
+  --dur: 400ms;
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; }
+body {
+  font-family: var(--font);
+  background: var(--blanco);
+  color: var(--negro);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+a { color: inherit; }
+.wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.eyebrow {
+  font-size: var(--t-xs); text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700;
+}
+h1, h2, h3 { text-transform: lowercase; font-weight: 700; text-wrap: balance; }
+h1 { font-size: clamp(56px, 13vw, var(--t-2xl)); letter-spacing: -0.03em; line-height: 0.95; }
+h2 { font-size: clamp(var(--t-lg), 8vw, var(--t-xl)); letter-spacing: -0.03em; line-height: 1; }
+h3 { font-size: var(--t-md); letter-spacing: -0.02em; line-height: 1.05; }
+:focus-visible { outline: var(--borde) solid var(--negro); outline-offset: 3px; }
+
+/* ── Botón: invierte de golpe, 120ms ── */
+.btn {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font-family: var(--font); font-size: var(--t-sm); font-weight: 700;
+  text-transform: lowercase; text-decoration: none;
+  padding: 10px 24px; border: var(--borde) solid var(--negro);
+  background: var(--negro); color: var(--blanco); cursor: pointer;
+  transition: background 120ms var(--ease), color 120ms var(--ease);
+}
+.btn:hover { background: var(--blanco); color: var(--negro); }
+
+/* ══ NAV ══ */
+.nav { border-bottom: var(--borde) solid var(--negro); }
+.nav .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 8px; }
+.nav b { font-size: var(--t-sm); text-transform: lowercase; letter-spacing: -0.01em; }
+.nav ul { list-style: none; display: flex; gap: 4px; flex-wrap: wrap; }
+.nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+  font-weight: 700; text-transform: lowercase; text-decoration: none;
+  transition: background 120ms var(--ease), color 120ms var(--ease);
+}
+.nav a:hover { background: var(--negro); color: var(--blanco); }
+
+/* ══ HERO: papel, negro, azul ══ */
+.hero { border-bottom: var(--borde) solid var(--negro); overflow: hidden; }
+.hero .wrap {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 48px; align-items: end; padding-block: 72px 64px;
+}
+.hero-txt { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.lead { font-size: var(--t-md); line-height: 1.25; max-width: 30ch; }
+.hero-fig { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: end; }
+.cta {
+  position: absolute; top: 0; right: 0; width: 82%; aspect-ratio: 1;
+  border-radius: 50%; background: var(--azul); color: var(--blanco);
+  display: grid; place-items: center; text-decoration: none;
+  mix-blend-mode: multiply;
+  transition: background 120ms var(--ease);
+  animation: entra var(--dur) var(--ease) both;
+}
+.cta:hover { background: var(--negro); }
+.cta span { display: flex; flex-direction: column; align-items: center; gap: 14px; font-size: var(--t-md); font-weight: 700; text-transform: lowercase; letter-spacing: -0.02em; }
+.cta i { width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-top: 22px solid currentColor; transition: transform var(--dur) var(--ease); }
+.cta:hover i { transform: rotate(180deg); }
+.lugar {
+  position: absolute; left: 0; bottom: 0; width: 46%; aspect-ratio: 1;
+  background: var(--negro); color: var(--blanco);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; padding: 16px;
+  mix-blend-mode: multiply;
+}
+.lugar .eyebrow { line-height: 1.4; }
+@keyframes entra { from { transform: translateX(110%); } }
+
+/* ══ TRAYECTORIA: papel, negro, rojo ══ */
+.tray { border-bottom: var(--borde) solid var(--negro); }
+.tray .wrap { padding-block: 72px; display: grid; gap: 56px; }
+.tray-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+.tray-top > div { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.tray p { max-width: 62ch; }
+.stack { display: grid; grid-template-columns: max-content minmax(0, 1fr); border-top: var(--borde) solid var(--negro); }
+.stack dt, .stack dd { padding: 10px 0; border-bottom: 2px solid var(--negro); }
+.stack dt { padding-right: 20px; }
+.stack dd { font-weight: 400; }
+/* experiencia: la forma codifica el tipo de vínculo */
+.f { display: inline-block; flex: none; width: 22px; height: 22px; background: var(--negro); }
+.f.prod { border-radius: 50%; background: var(--rojo); }
+.f.free { width: 0; height: 0; background: none; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 22px solid var(--negro); }
+.ley { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.ley ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.ley li { display: flex; align-items: center; gap: 8px; }
+.ley .f { transform: scale(0.5); margin: -6px; }
+.exp { list-style: none; border-top: var(--borde) solid var(--negro); }
+.exp > li {
+  display: grid; grid-template-columns: 220px 32px minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px; align-items: start; padding-block: 24px; border-bottom: 2px solid var(--negro);
+}
+.exp > li:last-child { border-bottom-width: var(--borde); }
+.exp .per { font-size: var(--t-md); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; text-transform: lowercase; font-variant-numeric: tabular-nums; }
+.exp .f { margin-top: 4px; }
+.exp h3 { margin-bottom: 4px; }
+.exp .rol { font-weight: 700; }
+.exp .det { min-width: 0; }
+@media (max-width: 900px) {
+  .exp > li { grid-template-columns: 32px minmax(0, 1fr); gap: 8px 16px; }
+  .exp .per { grid-column: 2; grid-row: 1; }
+  .exp .f { grid-column: 1; grid-row: 1; }
+  .exp .quien, .exp .det { grid-column: 2; }
+}
+
+/* ══ BANDAS DE PROYECTOS ══ */
+.grupo { border-bottom: var(--borde) solid var(--negro); }
+.banda { background: var(--acc); color: var(--sobre); border-bottom: var(--borde) solid var(--negro); }
+.banda .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: end; padding-block: 56px 40px; }
+.banda p { max-width: 52ch; }
+.banda .eyebrow { margin-bottom: 16px; }
+.grid { display: grid; gap: 32px; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-block: 56px 72px; }
+.grid.dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.card { border: var(--borde) solid var(--negro); display: grid; grid-template-rows: auto 1fr; background: var(--blanco); min-width: 0; }
+.card.ancha { grid-column: 1 / -1; grid-template-rows: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+.cover { aspect-ratio: 4 / 3; border-bottom: var(--borde) solid var(--negro); display: grid; place-items: center; }
+.card.ancha .cover { aspect-ratio: auto; min-height: 320px; border-bottom: 0; border-right: var(--borde) solid var(--negro); }
+.cover svg { width: 56%; max-width: 240px; height: auto; }
+.cuerpo { padding: 24px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.card.ancha .cuerpo { padding: 32px; }
+.card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.card li { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 12px; }
+.card li::before { content: ""; width: 10px; height: 10px; margin-top: 7px; background: var(--acc); outline: 2px solid var(--negro); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
+.chips span { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; padding: 3px 8px; border: 2px solid var(--negro); }
+.card .btn { align-self: flex-start; }
+
+/* formas de portada: el color del grupo + negro, superpuestos por multiply */
+.a { fill: var(--acc); }
+.n { fill: var(--negro); }
+.p { fill: var(--blanco); }
+.m { mix-blend-mode: multiply; }
+.lin { fill: none; stroke: var(--negro); stroke-width: 6; stroke-linecap: butt; }
+
+/* ══ CONTACTO: negro, amarillo, papel ══ */
+.contacto { background: var(--negro); color: var(--blanco); }
+.contacto .wrap { padding-block: 80px 48px; display: grid; gap: 40px; }
+.contacto h2 { color: var(--amarillo); font-size: clamp(var(--t-lg), 9vw, var(--t-2xl)); line-height: 0.95; }
+.mail { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.mail code { font-family: var(--font); font-size: clamp(20px, 4vw, var(--t-md)); font-weight: 700; user-select: all; overflow-wrap: anywhere; }
+.btn.amarillo { background: var(--amarillo); color: var(--negro); border-color: var(--amarillo); }
+.btn.amarillo:hover { background: var(--negro); color: var(--amarillo); }
+.pie { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: var(--borde) solid var(--blanco); padding-top: 20px; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  .hero .wrap, .tray-top, .banda .wrap { grid-template-columns: minmax(0, 1fr); }
+  .hero .wrap { padding-block: 48px; }
+  .hero-fig { justify-self: start; max-width: 320px; }
+  .grid, .grid.dos { grid-template-columns: minmax(0, 1fr); }
+  .card.ancha { grid-template-columns: minmax(0, 1fr); }
+  .card.ancha .cover { min-height: 0; aspect-ratio: 4 / 3; border-right: 0; border-bottom: var(--borde) solid var(--negro); }
+}
+/* scroll suave solo si la persona no pidió reducir movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="principal">
+  <div class="wrap">
+    <b>vladimir varela herbage</b>
+    <ul>
+      <li><a href="#trayectoria">trayectoria</a></li>
+      <li><a href="#proyectos">proyectos</a></li>
+      <li><a href="#contacto">contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-txt">
+      <p class="eyebrow">Senior full stack · sistemas de IA · founder</p>
+      <h1>vladimir varela</h1>
+      <p class="lead">construyo productos digitales de punta a punta: arquitectura backend, interfaz y modelos de ia generativa funcionando en producción.</p>
+    </div>
+    <div class="hero-fig">
+      <a class="cta" href="#proyectos"><span>ver proyectos<i aria-hidden="true"></i></span></a>
+      <div class="lugar">
+        <p class="eyebrow">Santiago, Chile</p>
+        <p class="eyebrow">UTC−4 · remoto</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="tray" id="trayectoria">
+  <div class="wrap">
+    <div class="tray-top">
+      <div>
+        <p class="eyebrow">Sobre mí</p>
+        <h2>más de seis años llevando productos de cero a producción</h2>
+        <p>Trabajo con Python, Ruby on Rails y Node.js en el backend, y con React y Next.js en el frontend. Integro modelos de IA generativa (Gemini API, Claude API) en sistemas reales, automatizo procesos operativos y construyo pipelines de datos.</p>
+        <p>Fundé Asóciate, una plataforma SaaS que reemplazó procesos manuales completos en fundaciones y ONG. Me siento cómodo tomando decisiones de arquitectura por mi cuenta y trabajando directo con founders y equipos pequeños.</p>
+      </div>
+      <dl class="stack">
+        <dt class="eyebrow">Backend</dt><dd>Python · Flask · FastAPI · Rails · Node.js · NestJS · Laravel</dd>
+        <dt class="eyebrow">Frontend</dt><dd>React · Next.js · Vue · Angular · Tailwind</dd>
+        <dt class="eyebrow">IA</dt><dd>Gemini API · Claude API · DeepSeek · Pydantic AI</dd>
+        <dt class="eyebrow">Datos</dt><dd>PostgreSQL · MongoDB · MySQL · Pandas · Matplotlib</dd>
+        <dt class="eyebrow">Infra</dt><dd>Docker · GCP · AWS · Cloudflare · CI/CD</dd>
+        <dt class="eyebrow">Mobile</dt><dd>Flutter · Ionic · Capacitor</dd>
+        <dt class="eyebrow">Pagos y mensajería</dt><dd>WhatsApp Business API · Mercado Pago · Stripe · Twilio</dd>
+      </dl>
+    </div>
+
+    <div>
+      <div class="ley">
+        <p class="eyebrow">Experiencia</p>
+        <ul class="eyebrow" aria-label="tipo de vínculo">
+          <li><i class="f prod"></i>producto propio</li>
+          <li><i class="f"></i>empleo</li>
+          <li><i class="f free"></i>freelance</li>
+        </ul>
+      </div>
+      <ol class="exp">
+        <li>
+          <p class="per">dic 2024 – hoy</p>
+          <i class="f prod" role="img" aria-label="producto propio"></i>
+          <div class="quien"><h3>asóciate</h3><p class="rol">Founder y senior full stack</p></div>
+          <p class="det">SaaS B2B para fundaciones y ONG, construido de punta a punta como único desarrollador. Clientes en producción.</p>
+        </li>
+        <li>
+          <p class="per">oct 2025 – ene 2026</p>
+          <i class="f" role="img" aria-label="empleo"></i>
+          <div class="quien"><h3>nico seguros</h3><p class="rol">Desarrollador full stack</p></div>
+          <p class="det">Nuevas funcionalidades, bugs y tests con RSpec en una app Rails + React en producción. Despliegues con Bitbucket Pipelines.</p>
+        </li>
+        <li>
+          <p class="per">oct 2025 – ene 2026</p>
+          <i class="f" role="img" aria-label="empleo"></i>
+          <div class="quien"><h3>media moob</h3><p class="rol">Semi senior web platform specialist</p></div>
+          <p class="det">Lideré la migración de portales a Next.js con WordPress headless. Backoffice en Vue y Laravel.</p>
+        </li>
+        <li>
+          <p class="per">ago 2024 – hoy</p>
+          <i class="f free" role="img" aria-label="freelance"></i>
+          <div class="quien"><h3>freelance</h3><p class="rol">Desarrollador full stack</p></div>
+          <p class="det">MVPs y sistemas a medida para startups y pymes chilenas. Definición funcional, arquitectura y desarrollo.</p>
+        </li>
+        <li>
+          <p class="per">2019 – 2024</p>
+          <i class="f" role="img" aria-label="empleo"></i>
+          <div class="quien"><h3>diversas empresas</h3><p class="rol">Desarrollador full stack</p></div>
+          <p class="det">Ordéname, Alegra, dParadig, Presis Consultores, Perk CL, Matchbook Chile y Mangata Ediciones. Web, apps Flutter, automatización y reportería.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTOS: rojo ══ -->
+<section class="grupo" id="proyectos" style="--acc: var(--rojo); --sobre: var(--blanco);">
+  <div class="banda">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Emprendimiento · desde dic 2024</p>
+        <h2>producto propio</h2>
+      </div>
+      <p>Una oportunidad que identifiqué y un producto que diseñé y construí como único desarrollador: desde el modelo de datos hasta el despliegue y la relación con los clientes.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+
+    <article class="card ancha">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="a m" cx="60" cy="95" r="44"/>
+          <circle class="a m" cx="100" cy="95" r="44"/>
+          <circle class="a m" cx="140" cy="95" r="44"/>
+          <rect class="n" x="16" y="156" width="168" height="14"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">Dic 2024 – hoy · founder y desarrollador</p>
+        <h3>asóciate</h3>
+        <p>Plataforma SaaS B2B multi-organización para que fundaciones y ONG gestionen y recauden con sus donantes. Clientes reales en producción.</p>
+        <ul>
+          <li>Chatbot con Gemini API: clasificación de intención, conversaciones con estado y botones, derivación a agentes humanos y campañas autónomas.</li>
+          <li>Módulo propio para Odoo con la API oficial de WhatsApp Business: bots, bandeja de agentes y campañas con plantillas aprobadas por Meta.</li>
+          <li>Cobros recurrentes con Flow y Virtualpos: tokenización, webhooks y conciliación automática.</li>
+          <li>Reportes mensuales de desempeño para cada cliente con Pandas, Matplotlib y Seaborn.</li>
+        </ul>
+        <div class="chips"><span>Python</span><span>Flask</span><span>PostgreSQL</span><span>MongoDB</span><span>Gemini</span><span>Odoo</span><span>GCP</span><span>Cloudflare</span></div>
+        <a class="btn" href="https://asociate.cl" target="_blank" rel="noopener">visitar asociate.cl</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══ CLIENTES: azul ══ -->
+<section class="grupo" style="--acc: var(--azul); --sobre: var(--blanco);">
+  <div class="banda">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Freelance · 6 proyectos</p>
+        <h2>para clientes</h2>
+      </div>
+      <p>MVPs para emprendedores, sistemas a medida para pymes y agencias, y pruebas de concepto. En cada uno definí el alcance funcional junto al cliente, la arquitectura y el desarrollo.</p>
+    </div>
+  </div>
+  <div class="wrap grid">
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <polygon class="a" points="100,24 176,168 24,168"/>
+          <rect class="n" x="93" y="72" width="14" height="56"/>
+          <rect class="n" x="93" y="140" width="14" height="14"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · MVP · IA aplicada a normativa</p>
+        <h3>prevenia</h3>
+        <p>Asistente para prevencionistas de riesgos en empresas chilenas. Revisa documentos contra la normativa y redacta los que exige la ley.</p>
+        <ul>
+          <li>Análisis de cumplimiento frente al DS 44/2024, DS 594 y la Ley 16.744 con Claude.</li>
+          <li>Genera matrices IPER, investigaciones de accidentes, programas preventivos y planes de emergencia en Word y PDF.</li>
+          <li>Tareas largas en segundo plano con Celery y Redis.</li>
+        </ul>
+        <div class="chips"><span>Claude API</span><span>Flask</span><span>Celery</span><span>React</span><span>TypeScript</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="a" cx="122" cy="66" r="40"/>
+          <rect class="n" x="20" y="118" width="160" height="10"/>
+          <rect class="n" x="20" y="118" width="10" height="62"/>
+          <rect class="n" x="170" y="118" width="10" height="62"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · MVP · gestión deportiva</p>
+        <h3>volleyos</h3>
+        <p>Menos oficina, más cancha. App para clubes de vóleibol: mensualidades, socios, categorías y asistencia, pensada para usarse entre sets.</p>
+        <ul>
+          <li>Vistas de administrador y de socio, instalable como PWA.</li>
+          <li>Cobro de mensualidades y cuotas extra con Mercado Pago.</li>
+          <li>Confirmación de asistencia a partidos y entrenamientos.</li>
+        </ul>
+        <div class="chips"><span>Next.js 16</span><span>React 19</span><span>Supabase</span><span>Vercel</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <rect class="n" x="74" y="22" width="12" height="44"/>
+          <rect class="n" x="114" y="22" width="12" height="44"/>
+          <circle class="a" cx="100" cy="118" r="58"/>
+          <rect class="p" x="86" y="104" width="28" height="28"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · instalaciones eléctricas</p>
+        <h3>hydroforce crm</h3>
+        <p>Del primer contacto a la instalación terminada: agenda, levantamiento en terreno y seguimiento de cada cliente.</p>
+        <ul>
+          <li>Agendamiento de visitas integrado con el calendario.</li>
+          <li>Formulario de levantamiento eléctrico que genera el informe para el presupuesto.</li>
+          <li>Tablero de clientes por etapa de venta, hasta el informe fotográfico final.</li>
+        </ul>
+        <div class="chips"><span>Next.js 16</span><span>Supabase</span><span>React 19</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="a" cx="92" cy="92" r="66"/>
+          <circle class="p" cx="92" cy="92" r="32"/>
+          <rect class="n m" x="118" y="118" width="58" height="58"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2025–2026 · agencia de marketing</p>
+        <h3>agencia cero os</h3>
+        <p>Sistema operativo para una agencia: conecta clientes, tareas, producción de contenido, publicación y lo que el equipo aprende en el camino.</p>
+        <ul>
+          <li>Agentes de IA que proponen decisiones y un humano aprueba antes de ejecutar.</li>
+          <li>Conectores con Meta Ads, Google Ads, GA4, Search Console, Gmail y Nifty.</li>
+          <li>Flujo de aprobación de copy y arte, con historial y memoria de decisiones.</li>
+        </ul>
+        <div class="chips"><span>Agentes IA</span><span>RAG</span><span>Cloudflare</span><span>CI</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <rect class="a" x="28" y="28" width="144" height="30"/>
+          <rect class="n" x="28" y="72" width="40" height="100"/>
+          <rect class="n" x="80" y="72" width="40" height="64"/>
+          <rect class="n" x="132" y="72" width="40" height="100"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · prueba de concepto · medios locales</p>
+        <h3>plataforma de noticias multi-sitio</h3>
+        <p>Un solo backend administra varios periódicos independientes, cada uno con su dominio, su marca y su contenido.</p>
+        <ul>
+          <li>Middleware de Next.js que detecta el subdominio y resuelve el medio.</li>
+          <li>Páginas regeneradas cada hora (ISR) para servir rápido sin perder frescura.</li>
+          <li>Strapi como CMS compartido, todo en Docker Compose.</li>
+        </ul>
+        <div class="chips"><span>Next.js</span><span>Strapi</span><span>Docker</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <rect class="a" x="30" y="30" width="64" height="64"/>
+          <rect class="lin" x="106" y="30" width="64" height="64"/>
+          <rect class="lin" x="30" y="106" width="64" height="64"/>
+          <rect class="n" x="106" y="106" width="64" height="64"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · sitios web</p>
+        <h3>sitios para pymes</h3>
+        <p>Sitios rápidos, sin dependencias y fáciles de mantener para estudios jurídicos y servicios locales.</p>
+        <ul>
+          <li>Derecho y Justicia: sitio estático según su manual de marca, con formulario que deriva a WhatsApp.</li>
+          <li>Sandía: pet sitting en Santiago.</li>
+          <li>Sandoval y Asociados: sitio y landing de derecho civil sobre WordPress.</li>
+        </ul>
+        <div class="chips"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>WordPress</span></div>
+        <a class="btn" href="https://estudiodyj.cl" target="_blank" rel="noopener">visitar estudiodyj.cl</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══ HARDWARE Y JUEGOS: amarillo ══ -->
+<section class="grupo" style="--acc: var(--amarillo); --sobre: var(--negro);">
+  <div class="banda">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Hardware y móvil · 2 proyectos</p>
+        <h2>fuera de la pantalla</h2>
+      </div>
+      <p>Proyectos donde el software toca algo físico o se juega en grupo: firmware, Bluetooth y apps móviles multiplataforma.</p>
+    </div>
+  </div>
+  <div class="wrap grid dos">
+
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <rect class="n" x="138" y="34" width="8" height="40"/>
+          <circle class="n" cx="142" cy="30" r="10"/>
+          <rect class="a" x="26" y="74" width="148" height="60"/>
+          <rect class="lin" x="26" y="74" width="148" height="60"/>
+          <circle class="n" cx="64" cy="146" r="24"/>
+          <circle class="n" cx="136" cy="146" r="24"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · robótica educativa</p>
+        <h3>esp32 car</h3>
+        <p>Auto a control remoto para enseñar programación. La app habla directo con el auto por Bluetooth, sin servidor de por medio.</p>
+        <ul>
+          <li>Firmware en C++ para ESP32: servidor BLE, telemetría y tracción diferencial con puente H.</li>
+          <li>App móvil para manejar con pedales o programar recorridos con bloques.</li>
+          <li>Conexión por búsqueda, código o QR, para distinguir varios autos en la misma sala.</li>
+        </ul>
+        <div class="chips"><span>ESP32</span><span>C++</span><span>BLE</span><span>Ionic</span><span>Capacitor</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cover">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <rect class="lin" x="52" y="24" width="96" height="152"/>
+          <polygon class="a" points="100,56 144,100 100,144 56,100"/>
+          <rect class="n" x="64" y="36" width="14" height="14"/>
+          <rect class="n" x="122" y="150" width="14" height="14"/>
+        </svg>
+      </div>
+      <div class="cuerpo">
+        <p class="eyebrow">2026 · juego de cartas</p>
+        <h3>cuarto rey</h3>
+        <p>Juego de cartas para grupos como app móvil multiplataforma. Cada carta de la baraja trae una regla y el grupo decide qué tan intenso jugar.</p>
+        <ul>
+          <li>Baraja de 52 cartas barajada en cada partida.</li>
+          <li>Tres niveles de intensidad y reglas editables por los jugadores.</li>
+        </ul>
+        <div class="chips"><span>Ionic</span><span>React</span><span>Capacitor</span><span>TypeScript</span></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══ CONTACTO ══ -->
+<footer class="contacto" id="contacto">
+  <div class="wrap">
+    <p class="eyebrow">Contacto</p>
+    <h2>¿tienes un producto por construir?</h2>
+    <div class="mail">
+      <code id="correo">vladimir.varelah@gmail.com</code>
+      <button class="btn amarillo" id="copiar" type="button">copiar correo</button>
+    </div>
+    <div class="pie">
+      <p class="eyebrow">Español nativo · inglés B1 · portugués A2</p>
+      <p class="eyebrow">Santiago, Chile · 2026</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('copiar');
+  const correo = document.getElementById('correo');
+  btn.addEventListener('click', () => {
+    const marcar = () => {
+      const r = document.createRange(); r.selectNodeContents(correo);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'correo seleccionado';
+    };
+    try {
+      navigator.clipboard.writeText(correo.textContent)
+        .then(() => { btn.textContent = 'correo copiado'; })
+        .catch(marcar);
+    } catch (e) { marcar(); }
+    setTimeout(() => { btn.textContent = 'copiar correo'; }, 2400);
+  });
+</script>
+</body>
+</html>
